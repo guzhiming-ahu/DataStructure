@@ -37,6 +37,9 @@ public interface List<E> {
      * @return 被删除的元素
      */
     default E remove(E element) {
+        if (element instanceof Integer) {
+            System.out.println("[Warning] 当使用Integer类作为泛型参数时, 此函数List.remove(E element)可能与重载List.remove(int index)相冲突,");
+        }
         return this.remove(element, 0);
     }
 
@@ -84,7 +87,9 @@ public interface List<E> {
      * @param index   搜索的起始位置(包含该元素)
      * @return 元素在表中是否存在
      */
-    boolean contains(E element, int index);
+    default boolean contains(E element, int index) {
+        return this.indexOf(element, index) != -1;
+    }
 
     /**
      * 从表头开始,向后查找元素是否存在
@@ -136,4 +141,11 @@ public interface List<E> {
      * @return 如果支持紧凑, 则返回true, 否则返回false
      */
     boolean compact();
+
+    /**
+     * 用于产生一个数组,数组中存放的元素和列表中的元素一致
+     *
+     * @return 新的数组
+     */
+    E[] asList();
 }
