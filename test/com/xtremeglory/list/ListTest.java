@@ -95,10 +95,10 @@ public class ListTest {
         int count = 999;
         initList(list, count, true);
 
-        while (list.size()>0){
+        while (list.size() > 0) {
             list.remove(0);
-            assertOrder(list,true);
-            Assert.assertEquals(list.size(),--count);
+            assertOrder(list, true);
+            Assert.assertEquals(list.size(), --count);
         }
     }
 
@@ -108,10 +108,10 @@ public class ListTest {
         int count = 999;
         initList(list, count, true);
 
-        while (list.size()>0){
-            list.remove(list.size()-1);
-            assertOrder(list,true);
-            Assert.assertEquals(list.size(),--count);
+        while (list.size() > 0) {
+            list.remove(list.size() - 1);
+            assertOrder(list, true);
+            Assert.assertEquals(list.size(), --count);
         }
     }
 
@@ -128,7 +128,7 @@ public class ListTest {
             List<Integer> list = getInstance();
             initList(list, src_array);
             for (Integer integer : indexs) {
-                list.remove((int)integer); // 为什么此处必须使用int才能得到正确结果? 答案请见default E remove(E element)的定义
+                list.remove((int) integer); // 为什么此处必须使用int才能得到正确结果? 答案请见default E remove(E element)的定义
             }
             Assert.assertArrayEquals(list.asList(), dst_array);
         }
@@ -147,7 +147,7 @@ public class ListTest {
             List<Integer> list = getInstance();
             initList(list, src_array);
             for (Integer element : elements) {
-                Assert.assertEquals(element,list.remove(element));
+                Assert.assertEquals(element, list.remove(element));
             }
             Assert.assertArrayEquals(list.asList(), dst_array);
         }
@@ -166,15 +166,15 @@ public class ListTest {
 
             List<Integer> list = getInstance();
             initList(list, src_array);
-            for (int i=0;i<indexs.length;++i) {
-                Assert.assertEquals(elements[i],list.remove(elements[i],indexs[i]));
+            for (int i = 0; i < indexs.length; ++i) {
+                Assert.assertEquals(elements[i], list.remove(elements[i], indexs[i]));
             }
             Assert.assertArrayEquals(list.asList(), dst_array);
         }
     }
 
     @Test
-    public void listGet(){
+    public void listGet() {
         for (int index = 0; index < 4; ++index) {
             String[] cases = BasicTestUtils.loadTestCase("list/case/list_get.txt");
 
@@ -183,14 +183,14 @@ public class ListTest {
 
             List<Integer> list = getInstance();
             initList(list, src_array);
-            for (int i=0;i<dst_array.length;++i){
-                Assert.assertEquals(list.get(i),dst_array[i]);
+            for (int i = 0; i < dst_array.length; ++i) {
+                Assert.assertEquals(list.get(i), dst_array[i]);
             }
         }
     }
 
     @Test
-    public void listSet(){
+    public void listSet() {
         for (int index = 0; index < 4; ++index) {
             String[] cases = BasicTestUtils.loadTestCase("list/case/list_set.txt");
 
@@ -203,8 +203,8 @@ public class ListTest {
             List<Integer> list = getInstance();
             initList(list, src_array);
 
-            for (int i =0;i<elements.length;++i){
-                list.set(elements[i],indexs[i]);
+            for (int i = 0; i < elements.length; ++i) {
+                list.set(elements[i], indexs[i]);
             }
 
             Assert.assertArrayEquals(list.asList(), dst_array);
