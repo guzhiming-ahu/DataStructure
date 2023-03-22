@@ -19,7 +19,7 @@ public class ListTest {
         return null;
     }
 
-    protected void assertOrder(List<Integer> list, boolean asc) {
+    public void assertOrder(List<Integer> list, boolean asc) {
         int i = list.size() - 1;
         while (i > 0) {
             if (asc) {
@@ -59,7 +59,7 @@ public class ListTest {
     }
 
     @Test
-    public void sequenceInsert2() throws InstantiationException, IllegalAccessException {
+    public void sequenceInsert2() {
         List<Integer> list = getInstance();
 
         initList(list, 999, false);

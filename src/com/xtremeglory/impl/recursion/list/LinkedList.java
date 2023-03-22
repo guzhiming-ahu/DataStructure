@@ -20,15 +20,13 @@ final class Node<E> {
         this.next = next;
     }
 
-    Node(E element) {
-        this.element = element;
-    }
+    Node() {}
 
     /**
      * insert承诺返回最新的表头
      *
-     * @param element
-     * @param index
+     * @param element 需要存储的元素
+     * @param index 元素将会保存在index位置
      */
     void insert(E element, int index) {
         if (index > 0) {
@@ -39,9 +37,9 @@ final class Node<E> {
     }
 
     /**
-     * @param index
-     * @param value_box
-     * @return
+     * 删除index下标处的元素,并返回被删除元素
+     * @param index 被删除元素的位置
+     * @param value_box 保存被删除元素的数据结构,用于在return时把被删除元素带出
      */
     void remove(int index, ValueBox<E> value_box) {
         if (index > 0) {
@@ -113,7 +111,7 @@ public class LinkedList<E> implements List<E> {
     private int size;
 
     public LinkedList() {
-        this.head = new Node<>(null);
+        this.head = new Node<>();
         this.size = 0;
     }
 
