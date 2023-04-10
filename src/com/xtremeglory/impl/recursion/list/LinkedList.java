@@ -45,7 +45,7 @@ final class Node<E> {
         if (index > 0) {
             this.next.remove(index - 1, value_box);
         } else {
-            value_box.set(this.element);
+            value_box.set(this.next.element);
             this.next = this.next.next;
         }
     }
