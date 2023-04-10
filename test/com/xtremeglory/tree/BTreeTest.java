@@ -91,21 +91,25 @@ public class BTreeTest {
         }
     }
 
-//    @Test
-//    public void randomRemove(){
-//        int count = 3000;
-//        for (int dim=3;dim<100;++dim) {
-//            BTree<Integer> bt=new BTree<>(dim);
-//            for (int i=0;i<count;++i){
-//                int random = (int) (Math.random()*100000);
-//                if (!bt.contains(random)) {
-//                    bt = bt.remove(random);
-//                    keepFeature(bt);
-//                }
-//            }
-//            System.out.println("dim: "+dim+" passed");
-//        }
-//    }
+    @Test
+    public void testIterator(){
+        int count = 3000;
+        for (int dim=3;dim<100;++dim) {
+            BTree<Integer> bt = new BTree<>(dim);
+            // insert
+            for (int i = 0; i < count; ++i) {
+                bt = bt.insert(i);
+            }
+
+            int i = 0;
+            for (int value:bt){
+                System.out.println(value);
+                assert i == value;
+                ++i;
+            }
+            System.out.println("dim: " + dim + " passed");
+        }
+    }
 
 
 }

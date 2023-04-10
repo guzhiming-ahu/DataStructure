@@ -1,6 +1,6 @@
 package com.xtremeglory.impl;
 
-public interface Tree<E extends Comparable<E>> {
+public interface Tree<E extends Comparable<E>> extends Iterable<E>{
     int size();
 
     /*增,删,查*/

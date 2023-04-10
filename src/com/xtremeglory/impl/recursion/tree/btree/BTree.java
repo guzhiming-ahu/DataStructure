@@ -1,9 +1,13 @@
 package com.xtremeglory.impl.recursion.tree.btree;
 
 import com.xtremeglory.impl.List;
+import com.xtremeglory.impl.Pair;
 import com.xtremeglory.impl.Tree;
 import com.xtremeglory.impl.Visitor;
 import com.xtremeglory.impl.recursion.list.LinkedList;
+import com.xtremeglory.impl.Stack;
+
+import java.util.Iterator;
 
 /**
  * 树中每个结点最多含有m棵子树。
@@ -147,11 +151,11 @@ public class BTree<E extends Comparable<E>> implements Tree<E> {
     @Override
     public int size() {
         int total = this.node_size;
-        for (BTree<E> tree:this.children){
-            if (tree==null){
+        for (BTree<E> tree : this.children) {
+            if (tree == null) {
                 break;
             }
-            total+=tree.size();
+            total += tree.size();
         }
         return total;
     }
@@ -277,5 +281,61 @@ public class BTree<E extends Comparable<E>> implements Tree<E> {
         } else {
             return this.elements[position - this.node_size - 1];
         }
+    }
+
+    class BTreeIterator implements Iterator<E> {
+        // 第一个参数表示当前遍历到的Node,第二个参数表示当前栈顶元素遍历到的位置,从0开始计数
+        private final Stack<Pair<BTree<E>, Integer>> stack;
+
+        public BTreeIterator(BTree<E> tree) {
+            this.stack = new Stack<>(new LinkedList<>());
+            stack.push(new Pair<>(tree, 0));
+
+            Pair<BTree<E>, Integer> current = this.stack.top();
+
+            while (current.first.children[current.second] != null) {
+                this.stack.push(new Pair<>(current.first.children[current.second], 0));
+                current = this.stack.top();
+            }
+        }
+
+        /**
+         * 如果当前栈顶元素的node_size为0,说明是个叶子节点,返回false
+         * 如果当前栈无元素,说明已经遍历完成,返回false
+         * @return 请见说明
+         */
+        @Override
+        public boolean hasNext() {
+            if (this.stack.isEmpty()) {
+                return false;
+            } else {
+                Pair<BTree<E>, Integer> current = this.stack.top();
+                return current.second < current.first.node_size;
+            }
+        }
+
+        @Override
+        public E next() {
+            Pair<BTree<E>, Integer> current = this.stack.top();
+            E element = current.first.elements[current.second++];
+
+            while (current.first.children[current.second] != null) {
+                this.stack.push(new Pair<>(current.first.children[current.second], 0));
+                current = this.stack.top();
+            }
+
+            while (!this.stack.isEmpty() && current.second >= current.first.node_size) {
+                this.stack.pop();
+                if (!this.stack.isEmpty()) {
+                    current = this.stack.top();
+                }
+            }
+            return element;
+        }
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new BTreeIterator(this);
     }
 }
